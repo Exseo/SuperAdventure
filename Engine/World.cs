@@ -6,13 +6,15 @@ using System.Threading;
 
 namespace Engine
 {
-    public static class World //using a static class to ensure consistency across world
+    public static class World 
     {
+        // Static List variables
         public static readonly List<Item> Items = new List<Item>();
         public static readonly List<Monster> Monsters = new List<Monster>();
         public static readonly List<Quest> Quests = new List<Quest>();
         public static List<Location> Locations = new List<Location>();
 
+        // constants to hold ID #s
         public const int ITEM_ID_RUSTY_SWORD = 1;
         public const int ITEM_ID_RAT_TAIL = 2;
         public const int ITEM_ID_PIECE_OF_FUR = 3;
@@ -41,14 +43,17 @@ namespace Engine
         public const int LOCATION_ID_BRIDGE = 8;
         public const int LOCATION_ID_SPIDER_FIELD = 9;
 
+        // static constructor for our world
         static World()
         {
+            // calling all four methods for our static lists
             PopulateItems();
             PopulateMonsters();
             PopulateQuests();
             PopulateLocations();
         }
 
+        // creating game objects and adding to lists
         private static void PopulateItems()
         {
             // Create Items, Weapons, and Healing Potions
@@ -133,7 +138,87 @@ namespace Engine
 
             //Link the locations together
 
+            home.LocationToTheNorth = townSquare;
+
+            townSquare.LocationToTheNorth = alchemistHut;
+            townSquare.LocationToTheSouth = home;
+            townSquare.LocationToTheEast = guardPost;
+            townSquare.LocationToTheWest = farmhouse;
+
+            farmhouse.LocationToTheEast = townSquare;
+            farmhouse.LocationToTheWest = farmersField;
+
+            farmersField.LocationToTheEast = farmhouse;
+
+            alchemistHut.LocationToTheSouth = townSquare;
+            alchemistHut.LocationToTheNorth = alchemistsGarden;
+
+            alchemistsGarden.LocationToTheSouth = alchemistHut;
+
+            guardPost.LocationToTheWest = townSquare;
+            guardPost.LocationToTheEast = bridge;
+
+            bridge.LocationToTheWest = guardPost;
+            bridge.LocationToTheEast = spiderField;
+
+            spiderField.LocationToTheWest = bridge;
+
+            //Add Locations to the static list
+            Locations.Add(home);
+            Locations.Add(townSquare);
+            Locations.Add(farmhouse);
+            Locations.Add(farmersField);
+            Locations.Add(alchemistHut);
+            Locations.Add(alchemistsGarden);
+            Locations.Add(guardPost);
+            Locations.Add(bridge);
+            Locations.Add(spiderField);
         }
 
+        // methods to get values from our static lists
+
+        public static Item ItemByID(int id)
+        {
+            foreach(Item item in Items)
+            {
+                if(item.ID == id)
+                    {return item;}
+            }
+         return null;
+        }
+
+        public static Monster MonsterByID(int id)
+        {
+            foreach(Monster monster in Monsters)
+            {if(monster.ID == id)
+                {return monster;}
+            }
+            return null;
+        }    
+
+        public static Quest QuestByID(int id)
+        {
+            foreach(Quest quest in Quests)
+            {
+                if(quest.ID == id)
+                    { return quest;}
+            }
+            return null;
+        }
+
+        public static Location LocationByID(int id)
+        {
+            foreach(Location location in Locations)
+                {
+                    if(location.ID == id)
+                    {
+                       return location;
+                    }
+                }
+             
+             return null;
+        }
+    
+        
     }
 }

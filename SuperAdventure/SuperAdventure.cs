@@ -24,7 +24,7 @@ namespace SuperAdventure
             InitializeComponent();
 
             //creates initial location object
-            Location location = new Engine.Location(1, "Home", "This is your house.");
+            Location location = new Location(1, "Home", "This is your house.");
        
             //Instatiate a new player object
             _player = new Player(10, 10, 20, 0, 1);
