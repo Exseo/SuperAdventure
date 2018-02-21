@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Engine
 {
-    class Weapon:Item //semicolon indicates the base class
+    public class Weapon:Item //semicolon indicates the base class
     {
         //properties to generate for weapons
         public int MinimumDamage { get; set; }
